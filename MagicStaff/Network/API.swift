@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+enum API {
+    static let BaseURL = URL(string: "http://0.0.0.0:8080/api/v1/")!
+}

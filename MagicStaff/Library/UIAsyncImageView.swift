@@ -1,5 +1,5 @@
 //
-//  UIImageViewExtensions.swift
+//  UIAsyncImageView.swift
 //  MagicStaff
 //
 //  Created by Karol Polaszek on 13/04/2019.
@@ -10,13 +10,19 @@ import UIKit
 
 class UIAsyncImageView: UIImageView {
     
-    var asyncImage: AsyncImage?
+    @IBOutlet var activityIndicator: UIActivityIndicatorView?
+    
+    private var asyncImage: AsyncImage? {
+        didSet {
+            oldValue?.removeObserver()
+        }
+    }
     
     func setAsyncImage(image: AsyncImage?) {
-        asyncImage?.removeObserver()
         asyncImage = image
         image?.setObserver {[weak self] (value) in
             DispatchQueue.main.async {
+                image?.isPlaceholder == true ? self?.activityIndicator?.startAnimating() : self?.activityIndicator?.stopAnimating()
                 self?.image = value
             }
         }

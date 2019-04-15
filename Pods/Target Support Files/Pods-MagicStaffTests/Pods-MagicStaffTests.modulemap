@@ -1,0 +1,6 @@
+framework module Pods_MagicStaffTests {
+  umbrella header "Pods-MagicStaffTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

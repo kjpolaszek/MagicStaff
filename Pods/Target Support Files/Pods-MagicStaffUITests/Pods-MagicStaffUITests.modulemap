@@ -1,0 +1,6 @@
+framework module Pods_MagicStaffUITests {
+  umbrella header "Pods-MagicStaffUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+struct SimpleDocumentItem: SimpleDocument, Decodable {
+    
+    var id: Int
+    
+    var title: String
+    
+    var category: String
+    
+    var thumbnailImg: String
+    
+}

@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+protocol DocumentDetailInteractor {
+    
+    func getDocumentTitle() -> String
+    func getDocumentAuthor() -> String
+    func getDocumentCategory() -> String
+    func getDocumentText() -> String
+    func getDocumentHeaderImage() -> AsyncImage
+    
+}

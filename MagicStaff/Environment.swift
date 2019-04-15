@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct Environment {
+    var network: Network
+    
+    init() {
+        network = NetworkWorker()
+    }
+}

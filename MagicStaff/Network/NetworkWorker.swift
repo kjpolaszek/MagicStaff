@@ -22,8 +22,7 @@ extension JSONDecoder {
 class NetworkWorker: Network {
     
     func getDocuments(complete: @escaping (Result<[SimpleDocument], NetworkError>) -> Void) {
-        let url = URL(string: "http://0.0.0.0:8080/api/v1/documents")!
-        makeRequestAndCreateObject(for: url, type: DocumentsContainer.self) { (result) in
+        makeRequestAndCreateObject(for: DocumentApi.documents, type: DocumentsContainer.self) { (result) in
             switch result {
             case .success(let object):
                 complete(.success(object.documents))
@@ -34,8 +33,7 @@ class NetworkWorker: Network {
     }
     
     func getDocumentDetail(id: Int, complete: @escaping (Result<Document, NetworkError>) -> Void) {
-        let url = URL(string: "http://0.0.0.0:8080/api/v1/documents/\(id)")!
-        makeRequestAndCreateObject(for: url, type: DocumentItem.self) { (result) in
+        makeRequestAndCreateObject(for: DocumentApi.document(id: id), type: DocumentItem.self) { (result) in
             switch result {
             case .success(let object):
                 complete(.success(object))
@@ -56,8 +54,10 @@ class NetworkWorker: Network {
         }.resume()
     }
     
-    private func makeRequestAndCreateObject<T>(for url: URL, type: T.Type, complete: @escaping (Result<T,NetworkError>) -> Void) where T: Decodable {
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 5)
+    private func makeRequestAndCreateObject<T>(for endpoint: EndpointType, type: T.Type, complete: @escaping (Result<T,NetworkError>) -> Void) where T: Decodable {
+        let url = API.BaseURL.appendingPathComponent(endpoint.path)
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 5)
+        request.httpMethod = endpoint.method.rawValue
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let _ = error {
                 complete(.failure(.networkError))

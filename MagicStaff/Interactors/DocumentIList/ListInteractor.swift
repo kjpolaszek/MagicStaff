@@ -10,7 +10,7 @@ import UIKit
 
 protocol ListInteractor {
     
-    func setPresenter(_ presenter: DocumentInteractorPresenter?)
+    func setPresenter(_ presenter: ListInteractorPresenter?)
     func loadData()
     func getNumberOfItemsFor(section: Int) -> Int
     func getNumberOfSections() -> Int

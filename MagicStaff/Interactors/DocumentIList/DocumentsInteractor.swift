@@ -1,5 +1,5 @@
 //
-//  DocumentInteractorImp.swift
+//  DocumentsInteractor.swift
 //  MagicStaff
 //
 //  Created by Karol Polaszek on 13/04/2019.
@@ -70,13 +70,13 @@ class DocumentsInteractor: ListInteractor {
     
     func loadData() {
         self.presenter?.startLoading(message: nil)
-        self.network.getDocuments {[weak self] (results) in
+        self.network.getDocuments {[unowned self] (results) in
             switch results {
             case .success(let documents):
-                self?.sections = self?.mapDocumentsToSections(documents) ?? []
-                self?.presenter?.dataLoadedSuccessfull()
+                self.sections = self.mapDocumentsToSections(documents)
+                self.presenter?.dataLoadedSuccessfull()
             case .failure(let error):
-                self?.presenter?.dataLoadedError(message: error.rawValue)
+                self.presenter?.dataLoadedError(message: error.rawValue)
             }
         }
     }
@@ -89,27 +89,32 @@ class DocumentsInteractor: ListInteractor {
     }
     
     func getSectionTitle(for section: Int) -> String? {
+        guard section < sections.count else {
+            return nil
+        }
         return sections[section].title
     }
     
     func didSelectItemAt(index: IndexPath) {
         let id = getDocumentId(for: index)
-        self.presenter?.startLoading(message: "Loading document ...")
-        network.getDocumentDetail(id: id) {[weak self] (result) in
+        network.getDocumentDetail(id: id) {[unowned self] (result) in
             switch result {
             case .success(let document):
-                self?.presenter?.showDetailFor(document: document)
+                self.openDocumentDetail(document: document)
             default:
                 break
             }
-            self?.presenter?.endLoading()
         }
     }
     
+    private func openDocumentDetail(document: Document) {
+        self.presenter?.showDetailFor(document: document)
+    }
+    
     private func fetchAndUpdateImage(for index: IndexPath) -> AsyncImage {
-        let asyncImage = AsyncImage(image: #imageLiteral(resourceName: "empty_image"))
-        self.images[index] = asyncImage
         if let url = getImageURL(for: index) {
+            let asyncImage = AsyncImage(placeholder: #imageLiteral(resourceName: "empty_image"))
+            self.images[index] = asyncImage
             network.getImage(from: url) { (result) in
                 switch result {
                 case .success(let data):
@@ -120,8 +125,9 @@ class DocumentsInteractor: ListInteractor {
                     break
                 }
             }
+            return asyncImage
         }
-        return asyncImage
+        return AsyncImage(placeholder: nil)
     }
     
     private func getImageURL(for index: IndexPath) -> URL? {

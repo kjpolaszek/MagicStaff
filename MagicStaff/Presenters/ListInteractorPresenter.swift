@@ -15,6 +15,5 @@ protocol ListInteractorPresenter: class {
     func dataLoadedSuccessfull()
     func dataLoadedError(message: String)
     func showDetailFor(document: Document)
-    func reloadCellAt(index: IndexPath)
     
 }

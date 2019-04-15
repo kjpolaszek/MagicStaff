@@ -7,3 +7,23 @@
 //
 
 import Foundation
+
+struct DocumentItem: Document, Decodable {
+    
+    var thumbnailImg: String
+    
+    var id: Int
+    
+    var author: String
+    
+    var text: String
+    
+    var created: Date
+    
+    var headerImg: String
+    
+    var title: String
+    
+    var category: String
+    
+}

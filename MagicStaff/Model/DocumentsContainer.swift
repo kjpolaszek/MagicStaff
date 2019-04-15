@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+struct DocumentsContainer: Decodable {
+    var documents: [SimpleDocumentItem]
+}

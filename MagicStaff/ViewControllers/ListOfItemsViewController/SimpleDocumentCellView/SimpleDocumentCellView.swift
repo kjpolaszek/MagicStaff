@@ -6,4 +6,11 @@
 //  Copyright © 2019 Karol Polaszek. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class SimpleDocumentCellView: UITableViewCell {
+    
+    @IBOutlet var titleLbl: UILabel!
+    @IBOutlet var pictureView: UIAsyncImageView!
+    
+}

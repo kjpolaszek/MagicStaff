@@ -7,15 +7,15 @@
 //
 
 import XCTest
+@testable import MagicStaff
 
 class BackendTests: XCTestCase {
 
+    var sut: Backend!
+    
     override func setUp() {
+        sut = BackendImp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
     func testExample() {
