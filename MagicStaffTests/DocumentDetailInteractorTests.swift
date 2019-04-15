@@ -1,15 +1,14 @@
 //
-//  MagicStaffTests.swift
+//  DocumentDetailInteractorTests.swift
 //  MagicStaffTests
 //
-//  Created by Karol Polaszek on 13/04/2019.
+//  Created by Karol Polaszek on 15/04/2019.
 //  Copyright © 2019 Karol Polaszek. All rights reserved.
 //
 
 import XCTest
-@testable import MagicStaff
 
-class MagicStaffTests: XCTestCase {
+class DocumentDetailInteractorTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
